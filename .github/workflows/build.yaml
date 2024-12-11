@@ -1,7 +1,12 @@
 name: android_build
 
-on:
+on: 
   workflow_dispatch:
+    inputs:
+      source:
+        description: '源码地址'     
+        required: true
+        default: 'https://github.com/AceDroidX/frp-Android.git'
 
 jobs:
   build:
@@ -17,7 +22,7 @@ jobs:
         name: Get project name
         run: echo "::set-output name=PROJECT::$(cat project-to-build)"
       - name: Clone project
-        run: git clone --depth=1 ${{ steps.get-project.outputs.PROJECT }} project
+        run: git clone --depth=1 ${{ github.event.inputs.source }} project
       - name: Build the app
         working-directory: ./project
         run: |
